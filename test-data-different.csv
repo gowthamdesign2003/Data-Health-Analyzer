@@ -1,0 +1,11 @@
+id,name,email,phone,age
+1,John Doe,john@example.com,555-1234,30
+2,Jane Smith,jane@example.com,,25
+3,Bob Wilson,bob@example.com,555-5678,
+4,Alice Brown,,555-9012,35
+5,Charlie Davis,,555-3456,
+6,Eva Martinez,eva@example.com,,
+7,Frank Anderson,,555-7890,40
+8,Grace Lee,grace@example.com,,
+9,Henry Taylor,,555-2345,
+10,Ivy Chen,ivy@example.com,555-6789,45
