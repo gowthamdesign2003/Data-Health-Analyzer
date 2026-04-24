@@ -74,7 +74,7 @@ export default function AnalysisPage() {
     try {
       const fileName = sessionStorage.getItem('fileName') || 'unknown';
       
-      // Generate AI insights
+      // First, generate all the data we need
       const goodColumns = columnStats.filter((s) => s.fillRate > 80);
       const mediumColumns = columnStats.filter((s) => s.fillRate >= 50 && s.fillRate <= 80);
       const badColumns = columnStats.filter((s) => s.fillRate < 50);
@@ -131,7 +131,6 @@ export default function AnalysisPage() {
         });
       }
       
-      // Generate report data
       let bestColumn = columnStats[0];
       let worstColumn = columnStats[0];
       
@@ -178,6 +177,9 @@ export default function AnalysisPage() {
       sessionStorage.setItem('aiInsights', aiInsightsText);
       sessionStorage.setItem('reportData', JSON.stringify(reportData));
       
+      // Wait 3 seconds for "AI generating insights" effect!
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
     } catch (err) {
       console.warn('Error saving to Supabase:', err);
     } finally {
@@ -190,17 +192,14 @@ export default function AnalysisPage() {
     router.push('/');
   };
 
-  if (loading) {
+  if (loading || savingToSupabase) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
-        <div className="text-center space-y-6">
-          <div className="relative">
-            <div className="w-32 h-32 border-4 border-blue-200 rounded-full"></div>
-            <div className="absolute top-0 left-0 w-32 h-32 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-          <div className="space-y-2">
-            <div className="text-2xl font-bold text-gray-900">Analyzing Data</div>
-            <div className="text-lg text-gray-600">Calculating fill rates...</div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-50 flex items-center justify-center">
+        <div className="text-center space-y-8">
+          <div className="w-40 h-40 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
+          <div className="space-y-3">
+            <div className="text-3xl font-extrabold text-gray-900">Generating AI Insights</div>
+            <div className="text-xl text-gray-600">Please wait while we analyze your data...</div>
           </div>
         </div>
       </div>
@@ -281,24 +280,14 @@ export default function AnalysisPage() {
 
         <div className="mt-10 flex justify-end">
           <button
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xl py-5 px-10 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xl py-5 px-10 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-0.5"
             onClick={handleNext}
-            disabled={savingToSupabase}
           >
             <div className="flex items-center gap-3">
-              {savingToSupabase ? (
-                <>
-                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Saving to Supabase...</span>
-                </>
-              ) : (
-                <>
-                  <span>Get AI Insights</span>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </>
-              )}
+              <span>Get AI Insights</span>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
             </div>
           </button>
         </div>

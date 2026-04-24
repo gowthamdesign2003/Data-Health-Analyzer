@@ -104,15 +104,12 @@ export default function InsightsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
-        <div className="text-center space-y-6">
-          <div className="relative">
-            <div className="w-32 h-32 border-4 border-blue-200 rounded-full"></div>
-            <div className="absolute top-0 left-0 w-32 h-32 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-          <div className="space-y-2">
-            <div className="text-2xl font-bold text-gray-900">Generating AI Insights</div>
-            <div className="text-lg text-gray-600">Please wait while we analyze your data...</div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-50 flex items-center justify-center">
+        <div className="text-center space-y-8">
+          <div className="w-40 h-40 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
+          <div className="space-y-3">
+            <div className="text-3xl font-extrabold text-gray-900">Generating AI Insights</div>
+            <div className="text-xl text-gray-600">Please wait while we analyze your data...</div>
           </div>
         </div>
       </div>
