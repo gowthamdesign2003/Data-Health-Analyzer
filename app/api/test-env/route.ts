@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   return NextResponse.json({
     openaiKeySet: !!process.env.OPENAI_API_KEY,
